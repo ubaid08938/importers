@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% block page_css %}
+    <!-- Custom box css -->
+    <link href="/assets/plugins/custombox/dist/custombox.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block user %}
+	{{user}}
+{% endblock %}
+
+{% block content_row %}
+
+{% csrf_token %}
+<style type="text/css">
+	.vm{
+		vertical-align: middle!important;
+	}
+</style>
+
+	<!-- Page-Title -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="d-none d-sm-block">
+                <ul class="nav nav-pills nav-pills-custom float-right">
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary btn-rounded w-md waves-effect waves-light m-b-5" href="/assets/files/sample-scraper-input.tsv?build=v12">Download Sample <i class="fa fa-download"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <h4 class="page-title">Importer</h4>
+        </div>
+    </div>
+    
+	<div class="row">
+	    <div class="col-sm-12">
+	        <div class="card">
+	            <div class="card-body">
+	                <div class="row">
+	                    <div class="col-lg-12">
+	                        <form method="post">
+				                <div class="m-t-20">
+				                    <h5>
+				                        <span>TSV*</span>
+				                    </h5>
+				                    <textarea id="query_code" class="form-control" rows="30" placeholder="Enter TSV"></textarea>
+				                    <br>
+				                    <input id="btnaddevent_kh_" type="button" class="btn btn-warning" value="Save" style="margin-right: 8px;">
+				                    <a href="" target="_blank" id="download_link"></a>
+				                </div>
+				            </form>
+	                    </div><!-- end col -->
+
+	                    <!-- end col -->
+	                </div><!-- end row -->
+	            </div>
+	        </div>
+	    </div><!-- end col -->
+	</div>
+{% endblock %}
+
+{% block page_script %}
+
+<script>
+    $(function (){
+        $("#btnaddevent_kh_").click(function () {
+            query_code = $("#query_code").val();
+            if (query_code.length > 0){
+                $(this).val('Loading..');
+                data = tsvJSON(query_code);
+                post_data(data,this.id);    
+            }
+            else{
+                alert('Error - Please fill all fields!');
+            }
+            
+        });
+
+        function tsvJSON(tsv){
+            var lines=tsv.split("\n");
+            var result = [];
+            var headers=lines[0].split(/\s+/);
+            for(var i=1;i<lines.length;i++){
+                var obj = {};
+                var currentline=lines[i].split("\t");
+                for(var j=0;j<headers.length;j++){
+                    console.log('TEST');
+                    if ($.trim(currentline[j]).indexOf("NULL") >= 0 || $.trim(currentline[j]).indexOf("null") >= 0 || $.trim(currentline[j]).indexOf("Null") >= 0){
+                        console.log($.trim(currentline[j]));
+                        obj[headers[j]] = null;
+                    }
+                    else{
+                        obj[headers[j]] = $.trim(currentline[j]);    
+                    }
+                    
+                }
+                result.push(obj);
+            }
+            //return result; //JavaScript object
+            return JSON.stringify({'items':result}); //JSON
+        }
+      
+
+        function post_data(json_data,currentid){
+            var csrftoken = getCookie('csrftoken');
+            $.ajax({
+                type: "POST",
+                url: "/api/importer/asin/",
+                data: json_data,
+                dataType: 'json',
+                contentType: 'application/json',
+                beforeSend: function(xhr, settings) {
+                    console.log("Before Send");
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                },
+                success: function (response) {
+                    if (response['ret'] != null){
+                        if (response['ret'].toString().indexOf("Error") >= 0) {
+                            alert(response['ret']);
+                        }
+                        else {
+                            alert('Submitted successfully!');
+                        }
+                        $("#"+currentid).val('Save');
+                        //$("#"+currentid).val('Save');
+                        //$("#download_link").html("Add Graph");
+                        //$("#download_link").attr("href","/graph/add/"+response['ret']+"/");
+                    }
+
+                },
+                error: function (response) {
+                    //$(id).html('Error!');
+                    if (response['status'] == 409){
+                        alert(response['responseText']);
+                    }
+                    else
+                    {
+                        alert('Error!');
+                    }
+                    
+                    $("#"+currentid).val('Save');
+                    //alert(response['ret']);
+                }
+            });
+        }
+
+        function getCookie(name) {
+            //debugger
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    });
+</script>
+{% endblock %}

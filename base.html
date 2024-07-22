@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Scrapify">
+        <meta name="author" content="Coderthemes">
+
+        <link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+        <title>{% block title %}Scrapify{% endblock %}</title>
+
+        {% block page_css %}{% endblock %}
+
+        <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="/assets/css/icons.css?build=v6" rel="stylesheet" type="text/css" />
+        <link href="/assets/css/style.css?build=v8" rel="stylesheet" type="text/css" />
+        <link href="/assets/css/icons2.css?build=v6" rel="stylesheet" type="text/css" />
+        <link href="/assets/css/style2.css?build=v6" rel="stylesheet" type="text/css" />
+
+        <script src="/assets/js/modernizr.min.js"></script>
+
+    </head>
+
+    <body class="fixed-left">
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- Topbar Start -->
+            <div class="navbar-custom">
+                <ul class="list-unstyled topnav-menu float-right mb-0">
+                    <li class="dropdown notification-list">
+                        <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            {% block user %}{% endblock %}
+                        </a>
+                    </li>
+
+
+                </ul>
+
+                <!-- LOGO -->
+                <div class="logo-box" style="background-color: #fff; padding-top: 4px;">
+                    <a href="/" class="logo text-center">
+                        <i class="zmdi zmdi-toys icon-c-logo"></i>
+                        <span><h1>Scrapify</h1></span>
+                    </a>
+                </div>
+
+                <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+                    <li>
+                        <button class="button-menu-mobile waves-effect waves-light">
+                            <i class="mdi mdi-menu"></i>
+                        </button>
+                    </li>
+        
+                    <!-- <li class="d-none d-sm-block">
+                        <form class="app-search">
+                            <div class="app-search-box">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <div class="input-group-append">
+                                        <button class="btn" type="submit">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </li> -->
+
+                    
+                </ul>
+            </div>
+            <!-- end Topbar -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="left-side-menu">
+
+                <div class="slimscroll-menu">
+
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu">
+
+                        <ul class="metismenu" id="side-menu">
+
+                            <li class="menu-title">Navigation</li>
+
+
+                            <li>
+                                <a href="javascript: void(0);" class="waves-effect">
+                                    <i class="mdi mdi-clipboard-text-outline"></i>
+                                    <span> Importers </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li><a href="/importer/asin/">ASIN Importer</a></li>
+                                    <li><a href="/importer/data/">Data Importer</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);" class="waves-effect">
+                                    <i class="mdi mdi-chart-arc"></i>
+                                    <span> Exporters </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li><a href="#">Batch Status</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <!-- End Sidebar -->
+
+                    <div class="clearfix"></div>
+
+                </div>
+                <!-- Sidebar -left -->
+
+            </div>
+            <!-- Left Sidebar End -->
+
+            
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="content-page">
+                <div class="content">
+                    <div class="container-fluid">
+                        <!-- Start content -->
+                        {% block content_row %} {% endblock %}
+                        <!-- content -->
+                    </div>
+                </div>
+
+                <footer class="footer">
+                    2024 © Noon.
+                </footer>
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+            <!-- ============================================================== -->
+
+
+            <!-- Right Sidebar -->
+            <div class="side-bar right-bar">
+                <a href="javascript:void(0);" class="right-bar-toggle">
+                    <i class="zmdi zmdi-close-circle-o"></i>
+                </a>
+                <h4 class="">Notifications</h4>
+                <div class="notification-list nicescroll">
+                    <ul class="list-group list-no-border user-list">
+                        <li class="list-group-item">
+                            <a href="#" class="user-list-item">
+                                <div class="avatar">
+                                    <img src="/assets/images/users/avatar-2.jpg" alt="">
+                                </div>
+                                <div class="user-desc">
+                                    <span class="name">Rohit Khurana</span>
+                                    <span class="desc">There are new settings available</span>
+                                    <span class="time">2 hours ago</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- /Right-bar -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+        
+        <script>
+            var resizefunc = [];
+        </script>
+
+
+        <!-- jQuery  -->
+        <script src="/assets/js/jquery.min.js"></script>
+        <script src="/assets/js/bootstrap.bundle.min.js"></script>
+        <script src="/assets/js/detect.js"></script>
+        <script src="/assets/js/fastclick.js"></script>
+        <script src="/assets/js/jquery.slimscroll.js"></script>
+        <script src="/assets/js/jquery.blockUI.js"></script>
+        <script src="/assets/js/waves.js"></script>
+        <script src="/assets/js/wow.min.js"></script>
+        <script src="/assets/js/jquery.nicescroll.js"></script>
+        <script src="/assets/js/jquery.scrollTo.min.js"></script>
+
+        {% block page_script %}{% endblock %}
+
+        <script src="/assets/js/jquery.core.js"></script>
+        <script src="/assets/js/jquery.app.js"></script>
+
+    </body>
+
+</html>

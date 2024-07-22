@@ -1,0 +1,18 @@
+version: '3.3'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:9026
+    volumes:
+      - .:/code
+    ports:
+      - "9026:9026"
+    environment:
+      - DB_CONTENT_NAME=${DB_CONTENT_NAME}
+      - DB_CONTENT_USER=${DB_CONTENT_USER}
+      - DB_CONTENT_PASSWORD=${DB_CONTENT_PASSWORD}
+      - DB_CONTENT_HOST=${DB_CONTENT_HOST}
+      - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}
+      - ENV=${ENV}
+      - SECRET_SC_KEY=${SECRET_SC_KEY}
